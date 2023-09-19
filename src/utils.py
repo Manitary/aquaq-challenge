@@ -37,7 +37,7 @@ def get_input(num: int) -> str:
     return contents
 
 
-def submit(num: int, answer: str) -> None:
+def submit(num: int, answer: str | int) -> None:
     r = requests.post(
         url=SUBMIT_URL.format(num=num),
         data={"answer": answer},
