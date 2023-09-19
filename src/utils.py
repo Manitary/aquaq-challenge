@@ -2,9 +2,11 @@ from pathlib import Path
 
 import requests
 from dotenv import dotenv_values
+from bs4 import BeautifulSoup, Tag
 
 CONFIG: dict[str, str] = dotenv_values(".env")
 INPUT_URL = "https://challenges.aquaq.co.uk/challenge/{num}/input.txt"
+SUBMIT_URL = "https://challenges.aquaq.co.uk/answer/{num}"
 
 
 def get_input(num: int) -> str:
@@ -26,10 +28,28 @@ def get_input(num: int) -> str:
     )
     if not r.ok:
         raise ConnectionError(
-            f"Could not retrieve the page. Status code: {r.status_code}"
+            f"Failed to retrieve the page. Status code: {r.status_code}"
         )
     contents = r.text
     file_path.parent.mkdir(parents=True, exist_ok=True)
     with file_path.open("w", encoding="utf-8") as f:
         f.write(contents)
     return contents
+
+
+def submit(num: int, answer: str) -> None:
+    r = requests.post(
+        url=SUBMIT_URL.format(num=num),
+        data={"answer": answer},
+        cookies={"session": CONFIG.get("SESSION_COOKIE", "")},
+        timeout=60,
+    )
+    if not r.ok:
+        raise ConnectionError(
+            f"Failed to submit the answer. Status code: {r.status_code}"
+        )
+    bs = BeautifulSoup(r.text, features="html.parser")
+    containers = bs.find_all("div", "bd-container-body")
+    for c in containers:
+        assert isinstance(c, Tag)
+        print(c.text.strip().split("\n")[0])
