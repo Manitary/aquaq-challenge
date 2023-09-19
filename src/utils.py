@@ -4,7 +4,7 @@ import requests
 from dotenv import dotenv_values
 from bs4 import BeautifulSoup, Tag
 
-CONFIG: dict[str, str] = dotenv_values(".env")
+CONFIG: dict[str, str] = dotenv_values(".env")  # type:ignore
 INPUT_URL = "https://challenges.aquaq.co.uk/challenge/{num}/input.txt"
 SUBMIT_URL = "https://challenges.aquaq.co.uk/answer/{num}"
 
