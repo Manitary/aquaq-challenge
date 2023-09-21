@@ -71,7 +71,7 @@ class Storage:
 
 
 def main() -> int:
-    data = get_input(8).strip()
+    data = get_input(8)
     contents = csv.DictReader(data.split("\n"))
     storage = Storage()
     for day in contents:

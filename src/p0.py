@@ -15,7 +15,7 @@ KEYPAD = {
 
 
 def main() -> str:
-    data = (tuple(map(int, row.split())) for row in get_input(0).strip().split("\n"))
+    data = (tuple(map(int, row.split())) for row in get_input(0).split("\n"))
     return "".join(
         KEYPAD[button][(num - 1) % len(KEYPAD[button])] for button, num in data
     )

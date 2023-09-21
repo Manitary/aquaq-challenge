@@ -2,7 +2,7 @@ from utils import get_input, submit
 
 
 def main() -> int:
-    data = tuple(map(int, get_input(40).strip().split()))
+    data = tuple(map(int, get_input(40).split()))
     peaks: dict[int, int] = {}
     valleys: dict[int, int] = {}
     for i, h in enumerate(data[1:-1], start=1):

@@ -6,7 +6,7 @@ def count_ones(*nums: int) -> int:
 
 
 def main() -> int:
-    data = int(get_input(6).strip().split()[-1])
+    data = int(get_input(6).split()[-1])
     print(data)
     ans = 0
     for i in range(data + 1):

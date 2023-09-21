@@ -69,7 +69,7 @@ def apply_rule(candidates: set[str], rule: Rule) -> set[str]:
 
 
 def main() -> int:
-    data = csv.DictReader(get_input(37).strip().split("\n"))
+    data = csv.DictReader(get_input(37).split("\n"))
     candidates = WORDS
     answer = 0
     for row in data:

@@ -40,7 +40,7 @@ class Die:
 
 
 def main() -> int:
-    data = get_input(5).strip()
+    data = get_input(5)
     dice = (Die(1, 2, 3), Die(1, 3, 2))
     ans = 0
     for i, instr in enumerate(data):

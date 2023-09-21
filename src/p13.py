@@ -4,7 +4,7 @@ from utils import get_input, submit
 
 
 def main() -> int:
-    data = get_input(13).strip().split("\n")
+    data = get_input(13).split("\n")
     pattern = re.compile(r"(.*?)(\w\w*?)\2{2,}(.*?)")
     # \2{2,} fails in cases like "aab", but they do not appear in the input
     # \2{1,} failed at least for the case of "drjmxnisyvgufwbtzaahahahahahahahahahahahahahahahahahahahah"

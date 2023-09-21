@@ -27,7 +27,7 @@ class Elo:
 
 
 def main() -> int:
-    data = get_input(7).strip()
+    data = get_input(7)
     contents = csv.DictReader(data.split("\n"))
     tournament = Elo(k=20)
     for row in contents:

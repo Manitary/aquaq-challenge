@@ -45,7 +45,7 @@ def is_valid(cards: frozenset[tuple[int, ...]]) -> bool:
 
 
 def main() -> int:
-    data = tuple(tuple(map(int, tuple(x))) for x in get_input(30).strip().split("\n"))
+    data = tuple(tuple(map(int, tuple(x))) for x in get_input(30).split("\n"))
     # data = ("11010", "110", "00101011010")
     # data = tuple(tuple(map(int, tuple(x))) for x in data)
     # print(data)

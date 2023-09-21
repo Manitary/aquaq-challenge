@@ -33,7 +33,7 @@ def get_input(num: int) -> str:
         raise ConnectionError(
             f"Failed to retrieve the page. Status code: {r.status_code}"
         )
-    contents = r.text
+    contents = r.text.strip()
     file_path.parent.mkdir(parents=True, exist_ok=True)
     with file_path.open("w", encoding="utf-8") as f:
         f.write(contents)

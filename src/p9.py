@@ -4,7 +4,7 @@ from utils import get_input, submit
 
 
 def main() -> int:
-    return prod(map(int, get_input(9).strip().split("\n")))
+    return prod(map(int, get_input(9).split("\n")))
 
 
 if __name__ == "__main__":

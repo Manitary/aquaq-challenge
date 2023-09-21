@@ -2,9 +2,7 @@ from utils import get_input, submit
 
 
 def main() -> int:
-    data = tuple(
-        map(lambda x: tuple(map(int, x.split())), get_input(12).strip().split("\n"))
-    )
+    data = tuple(map(lambda x: tuple(map(int, x.split())), get_input(12).split("\n")))
     max_floor = len(data) - 1
     curr_floor = 0
     visited = 1

@@ -2,7 +2,7 @@ from utils import get_input, submit
 
 
 def main() -> int:
-    data = tuple(map(int, get_input(39).strip().split()))
+    data = tuple(map(int, get_input(39).split()))
     target = 501
     winning_darts = 0
     player = 0

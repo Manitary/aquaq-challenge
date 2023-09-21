@@ -28,7 +28,7 @@ def create_map(board: Iterable[str] = BOARD) -> set[tuple[int, int]]:
 
 
 def main() -> int:
-    data = get_input(3).strip()
+    data = get_input(3)
     area = create_map()
     pos = (0, 2)
     ans = 0

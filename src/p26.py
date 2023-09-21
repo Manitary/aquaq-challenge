@@ -14,7 +14,7 @@ def next_larger_permutation(n: str) -> str:
 
 
 def main() -> int:
-    data = get_input(26).strip().split("\n")
+    data = get_input(26).split("\n")
     return sum(int(next_larger_permutation(d)) - int(d) for d in data)
 
 

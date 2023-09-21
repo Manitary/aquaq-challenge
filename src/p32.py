@@ -20,7 +20,7 @@ def is_balanced(s: str) -> bool:
 
 
 def main() -> int:
-    data = get_input(32).strip().split("\n")
+    data = get_input(32).split("\n")
     return sum(is_balanced(row) for row in data)
 
 

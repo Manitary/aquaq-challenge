@@ -19,7 +19,7 @@ def min_darts_for(score: int) -> int:
 
 
 def main() -> int:
-    data = int(get_input(33).strip())
+    data = int(get_input(33))
     return sum(min_darts_for(score) for score in range(1, data + 1))
 
 

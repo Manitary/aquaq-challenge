@@ -2,7 +2,7 @@ from utils import get_input, submit
 
 
 def main() -> int:
-    data = list(map(int, get_input(2).strip().split()))
+    data = list(map(int, get_input(2).split()))
     i = 0
     while i < len(data):
         try:
