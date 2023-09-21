@@ -5,24 +5,26 @@ from utils import get_input, submit
 
 
 def play_turn(board: NDArray[np.int64]) -> NDArray[np.int64]:
-    new_board = np.pad(board, ((1, 1), (1, 1)))
-    return (
+    new_board = (
         sum(
-            (np.roll(new_board, i, j) for i in (-1, 1) for j in (0, 1)),
-            start=np.zeros(shape=new_board.shape, dtype=np.int64),
+            (np.roll(board, i, j) for i in (-1, 1) for j in (0, 1)),
+            start=np.zeros(shape=board.shape, dtype=np.int64),
         )
         % 2
-    )[1:-1, 1:-1]
+    )
+    for i in (0, -1):
+        new_board[i] = 0
+        new_board[:, i] = 0
+    return new_board
 
 
 def play_game(num_steps: int, size: int, *coords: int) -> int:
-    board = np.zeros((size, size), dtype=np.int64)
+    board = np.zeros((size + 2, size + 2), dtype=np.int64)
     for x, y in zip(coords[::2], coords[1::2]):
-        board[x, y] = 1
+        board[x + 1, y + 1] = 1
     for _ in range(num_steps):
         board = play_turn(board)
-    ans = np.sum(board)
-    return int(ans)
+    return int(np.sum(board))
 
 
 def main() -> int:
