@@ -22,7 +22,7 @@ def get_input(num: int) -> str:
     if file_path.is_file():
         with file_path.open(encoding="utf-8") as f:
             contents = f.read()
-            return contents
+        return contents
     print("path does not exist")
     r = requests.get(
         INPUT_URL.format(num=num),
@@ -37,7 +37,7 @@ def get_input(num: int) -> str:
     file_path.parent.mkdir(parents=True, exist_ok=True)
     with file_path.open("w", encoding="utf-8") as f:
         f.write(contents)
-    return contents
+    return get_input(num)
 
 
 def submit(num: int, answer: str | int) -> None:
@@ -65,7 +65,7 @@ def get_additional_data(num: int) -> str:
     if file_path.is_file():
         with file_path.open(encoding="utf-8") as f:
             contents = f.read()
-            return contents
+        return contents
     print("path does not exist")
     r = requests.get(
         EXTRA_DATA[num],
@@ -76,8 +76,8 @@ def get_additional_data(num: int) -> str:
         raise ConnectionError(
             f"Failed to retrieve the page. Status code: {r.status_code}"
         )
-    contents = r.text
+    contents = r.text.strip()
     file_path.parent.mkdir(parents=True, exist_ok=True)
     with file_path.open("w", encoding="utf-8") as f:
         f.write(contents)
-    return contents
+    return get_additional_data(num)

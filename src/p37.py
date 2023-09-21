@@ -7,7 +7,7 @@ from utils import get_additional_data, get_input, submit
 
 Rule = Callable[[str], bool]
 
-WORDS = {word for word in get_additional_data(37).strip().split("\n") if len(word) == 5}
+WORDS = {word for word in get_additional_data(37).split("\n") if len(word) == 5}
 
 
 def convert(c: str) -> int:
