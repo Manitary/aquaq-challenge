@@ -1,65 +1,64 @@
+import sys
 from functools import cache
+from typing import Generator
+
 from utils import get_input, submit
+
+sys.setrecursionlimit(3500)
+
+Cards = tuple[int, ...]
 
 
 @cache
-def flip_card(input_cards: tuple[int, ...], pos: int) -> frozenset[tuple[int, ...]]:
+def flip_card(input_cards: Cards, pos: int) -> Generator[Cards, None, None]:
     if input_cards[pos] != 1:
         raise ValueError("Flipping the card is not possible")
-    if len(input_cards) == 1:
-        return frozenset()
     cards = list(input_cards)
     if pos == 0:
         cards[1] = 1 - cards[1]
-        return frozenset({tuple(cards[1:])})
-    if pos == len(cards) - 1:
+        yield tuple(cards[1:])
+    elif pos == len(cards) - 1:
         cards[-2] = 1 - cards[-2]
-        return frozenset({tuple(cards[:-1])})
-    cards[pos - 1] = 1 - cards[pos - 1]
-    cards[pos + 1] = 1 - cards[pos + 1]
-    return frozenset({tuple(cards[:pos]), tuple(cards[pos + 1 :])})
+        yield tuple(cards[:-1])
+    else:
+        cards[pos - 1] = 1 - cards[pos - 1]
+        cards[pos + 1] = 1 - cards[pos + 1]
+        yield tuple(cards[:pos])
+        yield tuple(cards[pos + 1 :])
+
+
+def all_flips(cards: Cards) -> Generator[tuple[Cards, ...], None, None]:
+    for pos, val in enumerate(cards):
+        if val != 1:
+            continue
+        yield tuple(flip_card(cards, pos))
 
 
 @cache
-def all_flips(cards: tuple[int, ...]) -> set[frozenset[tuple[int, ...]]]:
-    return {flip_card(cards, pos) for pos, val in enumerate(cards) if val == 1}
-
-
-@cache
-def is_valid(cards: frozenset[tuple[int, ...]]) -> bool:
+def is_valid_hand(cards: Cards) -> bool:
     if not cards:
         return True
-    if any(set(x) == {0} for x in cards):
+    if 1 not in cards:
         return False
-    if any(
-        all(
-            not is_valid(flip)
-            for flip in sorted(
-                all_flips(sub), key=lambda f: min((len(x) for x in f), default=0)
-            )
-        )
-        for sub in cards
-    ):
-        return False
-    return True
+    if cards == (1,):
+        return True
+    if any(is_valid_flip(*flip) for flip in all_flips(cards)):
+        return True
+    return False
+
+
+def is_valid_flip(*flip: Cards) -> bool:
+    return all(is_valid_hand(sub_flip) for sub_flip in flip)
 
 
 def main() -> int:
     data = tuple(tuple(map(int, tuple(x))) for x in get_input(30).split("\n"))
-    # data = ("11010", "110", "00101011010")
-    # data = tuple(tuple(map(int, tuple(x))) for x in data)
-    # print(data)
-    ans = 0
-    for j, row in enumerate(data):
-        print(j)
-        for i, c in enumerate(row):
-            if c == 0:
-                continue
-            if is_valid(flip_card(row, i)):
-                # print(row, i)
-                ans += 1
-
-    return ans
+    return sum(
+        is_valid_flip(*flip_card(row, i))
+        for row in data
+        for i, c in enumerate(row)
+        if c == 1
+    )
 
 
 if __name__ == "__main__":
